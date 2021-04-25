@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.courseprog">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CourseProg">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".InputActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".RegActivity" />
+        <activity android:name=".VhodActivity" >
+
+        </activity>
+        <activity android:name=".ShowCarActivity" >
+
+        </activity>
+        <activity android:name=".CarActivity" />
+
     </application>
 
 </manifest>

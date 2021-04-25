@@ -1,0 +1,127 @@
+{
+  "project_info": {
+    "project_number": "968124813051",
+    "firebase_url": "https://basedatepap-default-rtdb.firebaseio.com",
+    "project_id": "basedatepap",
+    "storage_bucket": "basedatepap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968124813051:android:84564c278b89fadcb96a5e",
+        "android_client_info": {
+          "package_name": "by.papko.orgtex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlaNCNCQh6KQ2a7ue5Aj1rsbf7DPlE_G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968124813051:android:a3698400701915f2b96a5e",
+        "android_client_info": {
+          "package_name": "by.vlad.quizes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlaNCNCQh6KQ2a7ue5Aj1rsbf7DPlE_G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968124813051:android:888139100df76cc6b96a5e",
+        "android_client_info": {
+          "package_name": "com.example.courseprog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlaNCNCQh6KQ2a7ue5Aj1rsbf7DPlE_G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968124813051:android:4b16c06bd404e48ab96a5e",
+        "android_client_info": {
+          "package_name": "com.papkou.fisrtapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlaNCNCQh6KQ2a7ue5Aj1rsbf7DPlE_G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968124813051-hgsip2i11ul10pposi4omnhh8gl5bur7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
