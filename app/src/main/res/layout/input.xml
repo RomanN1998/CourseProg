@@ -51,26 +51,28 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/btn_input_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="50dp"
+                android:layout_marginRight="5dp"
                 android:backgroundTint="@color/but"
+                android:onClick="InputIn"
                 android:text="Войти"
                 android:textColor="@color/cnsh"
                 android:textSize="20dp" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/btn_input_sign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/but"
+                android:onClick="InputSign"
                 android:text="Зарегистрироваться"
                 android:textColor="@color/cnsh"
                 android:textSize="20dp" />
