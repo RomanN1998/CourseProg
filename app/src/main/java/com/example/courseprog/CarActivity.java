@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,7 +33,7 @@ import java.io.ByteArrayOutputStream;
 public class CarActivity extends AppCompatActivity {
     private EditText editName, edirPric, edirSpe;
     private ImageView imageView;
-    private Button btnCreate, btnChoose;
+    private Button btnCreate, btnChoose, btnBack;
     private DatabaseReference mDataBase;
     private Uri uploadUri;
 
@@ -46,7 +47,8 @@ public class CarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.car);
         mAuth = FirebaseAuth.getInstance();
-        Log.d("MyLog", "UID : " + mAuth.getUid());
+        FirebaseUser cUser = mAuth.getCurrentUser();
+        Log.d("MyLog", "CarActivity UID : " + cUser.getUid());
 
         btnCreate = findViewById(R.id.btn_car_create);
         edirPric = findViewById(R.id.edit_car_price);
@@ -54,6 +56,7 @@ public class CarActivity extends AppCompatActivity {
         edirSpe = findViewById(R.id.edit_car_specification);
         imageView = findViewById(R.id.img_car_view);
         btnChoose = findViewById(R.id.btn_car_choose);
+        btnBack = findViewById(R.id.btn_car_back);
         storage = FirebaseStorage.getInstance();
 
         storageRef = storage.getReference("ImageDB");
@@ -69,7 +72,7 @@ public class CarActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String idkey = mDataBase.push().getKey();
                 Car car = new Car(idkey, editName.getText().toString(),
-                        edirPric.getText().toString(), edirSpe.getText().toString());
+                        edirPric.getText().toString(), edirSpe.getText().toString(), uploadUri.toString());
 
                 if(!TextUtils.isEmpty(editName.getText().toString()) && !TextUtils.isEmpty(edirPric.getText().toString())
                         && !TextUtils.isEmpty(edirSpe.getText().toString())) {
@@ -79,6 +82,7 @@ public class CarActivity extends AppCompatActivity {
                     edirPric.setText("");
                     edirSpe.setText("");
                     editName.setText("");
+
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Зполниет все поля", Toast.LENGTH_LONG).show();
@@ -93,6 +97,18 @@ public class CarActivity extends AppCompatActivity {
 
                 getImage();
 
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    Intent intent = new Intent(CarActivity.this, ShowCarActivity.class);
+                    startActivity(intent);
+                    finish();
+                }catch (Exception e) {
+                }
             }
         });
     }
@@ -115,7 +131,7 @@ public class CarActivity extends AppCompatActivity {
     private void uploadImage() {
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
         byte[] byteArray = baos.toByteArray();
         final StorageReference mRef = storageRef.child(System.currentTimeMillis() + "my_image");
         UploadTask up = mRef.putBytes(byteArray);
@@ -138,5 +154,17 @@ public class CarActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 100);
 
+    }
+
+    //Системная кнопка Назад
+    @Override
+    public void onBackPressed(){
+        try{
+            Intent intent = new Intent(CarActivity.this, ShowCarActivity.class);
+            startActivity(intent);
+            finish();
+
+        }catch (Exception e) {
+        }
     }
 }
