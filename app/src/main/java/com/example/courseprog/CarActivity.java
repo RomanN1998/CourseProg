@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,25 +23,32 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
 public class CarActivity extends AppCompatActivity {
     private EditText editName, edirPric, edirSpe;
+    private TextView textStatus;
     private ImageView imageView;
     private Button btnCreate, btnChoose, btnBack;
+    private Button btnReserve, btnCange, btnDelete;
     private DatabaseReference mDataBase;
     private Uri uploadUri;
-
+    private String upStringUri;
+    private DatabaseReference mDataBaseSheld;
+    private String securiy;
 
     private StorageReference storageRef;
     private FirebaseStorage storage;
     private FirebaseAuth mAuth;
+    private Car car;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,42 +58,150 @@ public class CarActivity extends AppCompatActivity {
         FirebaseUser cUser = mAuth.getCurrentUser();
         Log.d("MyLog", "CarActivity UID : " + cUser.getUid());
 
-        btnCreate = findViewById(R.id.btn_car_create);
-        edirPric = findViewById(R.id.edit_car_price);
         editName = findViewById(R.id.edit_car_name);
+        edirPric = findViewById(R.id.edit_car_price);
         edirSpe = findViewById(R.id.edit_car_specification);
+        textStatus = findViewById(R.id.text_car_status);
         imageView = findViewById(R.id.img_car_view);
+
         btnChoose = findViewById(R.id.btn_car_choose);
         btnBack = findViewById(R.id.btn_car_back);
+        btnCreate = findViewById(R.id.btn_car_create);
+        btnReserve = findViewById(R.id.btn_car_reserve);
+        btnCange = findViewById(R.id.btn_car_change);
+        btnDelete = findViewById(R.id.btn_car_delete);
         storage = FirebaseStorage.getInstance();
 
         storageRef = storage.getReference("ImageDB");
         mDataBase = FirebaseDatabase.getInstance().getReference("CAR");
+        mDataBaseSheld = FirebaseDatabase.getInstance().getReference("USERS");
+
+        Bundle arguments = getIntent().getExtras();
+
+        if(arguments != null) {
+            car = (Car) arguments.getSerializable(Car.class.getSimpleName());
+            editName.setText(car.getName());
+            edirPric.setText(car.getPrice());
+            edirSpe.setText(car.getSpecification());
+            upStringUri = car.getUrlImage();
+            if (!car.getUrlImage().isEmpty())
+                Picasso.get().load(car.getUrlImage()).into(imageView);
+
+            if(car.getIdPeople().isEmpty()) {
+                btnReserve.setEnabled(true);
+                textStatus.setText("Свободно");
+                btnReserve.setText("Забронировать");
+            } else if(cUser.getUid().equals(car.getIdPeople())) {
+                btnReserve.setEnabled(true);
+                if (car.isStatus()) {
+                    textStatus.setText("Забранировано");
+                    btnReserve.setText("Отменить бронирование");
+                } else {
+                    textStatus.setText("Свободно");
+                    btnReserve.setText("Забронировать");
+                }
+            } else {
+                btnReserve.setEnabled(false);
+                textStatus.setText("Забранировано");
+                btnReserve.setText("Забранированый");
+            }
+
+        }
 
 //        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("cadillac-escalade.jpg");
 //        Glide.with(this /* context */)
 //                .load(storageReference)
 //                .into(imageView);
 
+        mAuth = FirebaseAuth.getInstance();
+        if (cUser != null) {
+            Log.d("MyLog", "UID : " + cUser.getUid());
+            mDataBaseSheld.child(mAuth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                    } else {
+                        if (!(null == task.getResult().getValue(People.class))) {
+                            People seUs = task.getResult().getValue(People.class);
+                            securiy = seUs.getSheld();
+                            if (securiy.equals("user")) {
+                                btnCreate.setVisibility(View.GONE);
+                                btnReserve.setVisibility(View.VISIBLE);
+                                btnCange.setVisibility(View.GONE);
+                                btnDelete.setVisibility(View.GONE);
+                                btnChoose.setVisibility(View.GONE);
+                            } else if (securiy.equals("admin")) {
+                                btnReserve.setEnabled(true);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDataBase.child(car.getId()).removeValue();
+                Toast.makeText(getApplicationContext(), "Удалить", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnCange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                car.setName(editName.getText().toString());
+                car.setPrice(edirPric.getText().toString());
+                car.setSpecification(edirSpe.getText().toString());
+                car.setUrlImage(upStringUri);
+                mDataBase.child(car.getId()).setValue(car);
+                Toast.makeText(getApplicationContext(), "Изменено", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnReserve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (car.isStatus()) {
+                    car.setStatus(false);
+                    btnReserve.setText("Забронировать");
+                    textStatus.setText("Свободно");
+                    mDataBase.child(car.getId()).child("status").setValue(false);
+                    mDataBase.child(car.getId()).child("idPeople").setValue("");
+                }
+                else {
+                    car.setStatus(true);
+                    btnReserve.setText("Отменить бронирование");
+                    textStatus.setText("Забранировано");
+                    mDataBase.child(car.getId()).child("status").setValue(true);
+                    mDataBase.child(car.getId()).child("idPeople").setValue(cUser.getUid());
+                }
+
+            }
+        });
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String idkey = mDataBase.push().getKey();
-                Car car = new Car(idkey, editName.getText().toString(),
-                        edirPric.getText().toString(), edirSpe.getText().toString(), uploadUri.toString());
+                if (upStringUri != null){
+                    Car car = new Car(idkey, editName.getText().toString(),
+                            edirPric.getText().toString(), edirSpe.getText().toString(), upStringUri);
 
-                if(!TextUtils.isEmpty(editName.getText().toString()) && !TextUtils.isEmpty(edirPric.getText().toString())
-                        && !TextUtils.isEmpty(edirSpe.getText().toString())) {
-                    mDataBase.child(idkey).setValue(car);
+                    if(!TextUtils.isEmpty(editName.getText().toString()) && !TextUtils.isEmpty(edirPric.getText().toString())
+                            && !TextUtils.isEmpty(edirSpe.getText().toString())) {
+                        mDataBase.child(idkey).setValue(car);
 
-                    Toast.makeText(getApplicationContext(), "Машина добавлена в каталог", Toast.LENGTH_SHORT).show();
-                    edirPric.setText("");
-                    edirSpe.setText("");
-                    editName.setText("");
+                        Toast.makeText(getApplicationContext(), "Машина добавлена в каталог", Toast.LENGTH_SHORT).show();
+                        edirPric.setText("");
+                        edirSpe.setText("");
+                        editName.setText("");
 
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Зполниет все поля", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Зполниет все поля", Toast.LENGTH_LONG).show();
+                    }
                 }
 
             }
@@ -94,7 +210,6 @@ public class CarActivity extends AppCompatActivity {
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getImage();
 
             }
@@ -122,7 +237,6 @@ public class CarActivity extends AppCompatActivity {
                 Log.d("MyLog", "Image URI : " + data.getData());
                 imageView.setImageURI(data.getData());
                 uploadImage();
-
             }
 
         }
@@ -144,6 +258,7 @@ public class CarActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 uploadUri = task.getResult();
+                upStringUri = uploadUri.toString();
             }
         });
     }

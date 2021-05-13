@@ -2,7 +2,7 @@ package com.example.courseprog;
 
 public class People {
 
-    private String id, loginn, telepone, fullName, email;
+    private String id, loginn, telepone, fullName, email, sheld;
 
     People() {}
 
@@ -12,6 +12,7 @@ public class People {
         this.telepone = telepone;
         this.fullName = fullName;
         this.email = email;
+        this.sheld = "user";
     }
 
     public String getLoginn() {
@@ -52,5 +53,13 @@ public class People {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getSheld() {
+        return sheld;
+    }
+
+    public void setSheld(String sheld) {
+        this.sheld = sheld;
     }
 }
