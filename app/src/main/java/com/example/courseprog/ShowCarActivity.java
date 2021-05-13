@@ -52,7 +52,9 @@ public class ShowCarActivity extends AppCompatActivity {
         CarAdapter.OnCarClickListener carClickListener = new CarAdapter.OnCarClickListener() {
             @Override
             public void onCarClick(Car car, int position) {
-
+                Intent intent = new Intent(ShowCarActivity.this, Car.class);
+                intent.putExtra("CARSHOW","101");
+                startActivityForResult(intent, 101);
             }
         };
         adapter = new CarAdapter(this, cars, carClickListener);
@@ -80,6 +82,19 @@ public class ShowCarActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            Bundle arguments = data.getExtras();
+            if(arguments !=null) {
+                Car car = (Car) arguments.getSerializable(Car.class.getSimpleName());
+//                adapter.add(car.getName());
+            }
+//            adapter.notifyDataSetChanged();
+        }
     }
 
     private void getDataFromDB() {
