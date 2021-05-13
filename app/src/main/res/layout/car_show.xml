@@ -3,78 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/cnsh">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/image_view_car_show"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_car_show_car"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:text="Car"
+            android:textColor="@color/up"
+            android:textSize="30dp" />
 
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/text_car_show_price"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="Price$"
+            android:textColor="@color/red"
+            android:textSize="40dp" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName13"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="Car"
-                    android:textColor="@color/up"
-                    android:textSize="30dp" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text="Price$"
-                    android:textColor="@color/red"
-                    android:textSize="40dp" />
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Specification"
-                    android:textColor="@color/spec"
-                    android:layout_marginTop="10dp"
-                    android:textSize="50dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/text_car_show_specification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="Specification"
+            android:textColor="@color/spec"
+            android:textSize="50dp" />
 
     </LinearLayout>
 

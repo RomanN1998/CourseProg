@@ -1,16 +1,19 @@
 package com.example.courseprog;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
     private String id, name, price, specification;
     private String urlImage = "";
 
     Car() {}
 
-    Car(String id, String name, String price, String specification) {
+    Car(String id, String name, String price, String specification, String urlImage) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.specification = specification;
+        this.urlImage = urlImage;
     }
 
     public String getId() {

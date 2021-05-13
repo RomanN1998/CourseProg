@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cnsh">
@@ -57,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="Car"
+                    android:hint="CAR"
                     android:textColor="@color/up"
                     android:textSize="30dp" />
 
@@ -66,9 +67,9 @@
                     android:id="@+id/edit_car_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="Price$"
+                    android:gravity="center"
+                    android:hint="PRICE"
                     android:textColor="@color/red"
                     android:textSize="40dp" />
 
@@ -76,100 +77,120 @@
                     android:id="@+id/edit_car_specification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Specification"
-                    android:textColor="@color/spec"
                     android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:hint="Specification"
+                    android:textColor="@color/spec"
                     android:textSize="50dp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btn_car_reserve"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/but"
-                    android:text="Забронировать"
-                    android:textColor="@color/cnsh"
-                    android:textSize="20dp" />
-                <Button
-                    android:id="@+id/btn_car_choose"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/but"
-                    android:text="картинка"
-                    android:textColor="@color/cnsh"
-                    android:textSize="20dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_car_notreserve"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/but"
-                    android:text="Отменить"
-                    android:textColor="@color/cnsh"
-                    android:textSize="20dp"
-                    android:visibility="visible" />
+                    <Button
+                        android:id="@+id/btn_car_reserve"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/but"
+                        android:text="Забронировать"
+                        android:textColor="@color/cnsh"
+                        android:textSize="10dp" />
 
-                <Button
-                    android:id="@+id/btn_car_create"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/but"
-                    android:text="Дабавить"
-                    android:textColor="@color/cnsh"
-                    android:textSize="20dp"
-                    android:visibility="visible" />
+                    <Button
+                        android:id="@+id/btn_car_choose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/but"
+                        android:text="картинка"
+                        android:textColor="@color/cnsh"
+                        android:textSize="10dp" />
 
-                <Button
-                    android:id="@+id/btn_car_change"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/but"
-                    android:text="Именить"
-                    android:textColor="@color/cnsh"
-                    android:textSize="20dp"
-                    android:visibility="visible" />
+                    <Button
+                        android:id="@+id/btn_car_notreserve"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/but"
+                        android:text="Отменить"
+                        android:textColor="@color/cnsh"
+                        android:textSize="10dp"
+                        android:visibility="visible" />
+                </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_car_delete"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/but"
-                    android:text="Удалить"
-                    android:textColor="@color/cnsh"
-                    android:textSize="20dp"
-                    android:visibility="visible" />
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_car_back"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="15dp"
-                    android:backgroundTint="@color/but"
-                    android:text="Назад"
-                    android:textColor="@color/cnsh"
-                    android:textSize="20dp" />
+                    <Button
+                        android:id="@+id/btn_car_create"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/but"
+                        android:text="Дабавить"
+                        android:textColor="@color/cnsh"
+                        android:textSize="10dp"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btn_car_change"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/but"
+                        android:text="Именить"
+                        android:textColor="@color/cnsh"
+                        android:textSize="10dp"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btn_car_delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/but"
+                        android:text="Удалить"
+                        android:textColor="@color/cnsh"
+                        android:textSize="10dp"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btn_car_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/but"
+                        android:text="Назад"
+                        android:textColor="@color/cnsh"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

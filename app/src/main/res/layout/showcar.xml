@@ -19,12 +19,15 @@
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listShowCar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" >
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
