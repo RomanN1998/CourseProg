@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +33,8 @@ public class ShowCarActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private CarAdapter adapter;
     private DatabaseReference mDataBase;
+    private DatabaseReference mDataBaseSheld;
+    private String securiy;
 
     private ArrayList<Car> cars = new ArrayList<Car>();
     private ArrayList<Car> carsArray = new ArrayList<Car>();
@@ -44,17 +48,41 @@ public class ShowCarActivity extends AppCompatActivity {
         btnCreate = findViewById(R.id.btn_showcar_create);
         imads = findViewById(R.id.imageView3);
         listShowCar = findViewById(R.id.listShowCar);
+        mDataBaseSheld = FirebaseDatabase.getInstance().getReference("USERS");
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser cUser = mAuth.getCurrentUser();
-        Log.d("MyLog", "ShowCarActivity UID : " + cUser.getUid());
+        if (cUser != null) {
+            Log.d("MyLog", "UID : " + cUser.getUid());
+            mDataBaseSheld.child(mAuth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                    } else {
+                        if (!(null == task.getResult().getValue(People.class))) {
+                            People seUs = task.getResult().getValue(People.class);
+                            securiy = seUs.getSheld();
+                            if (securiy.equals("user")) {
+                                btnCreate.setVisibility(View.GONE);
+                            } else if (securiy.equals("admin")) {
+
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
         CarAdapter.OnCarClickListener carClickListener = new CarAdapter.OnCarClickListener() {
             @Override
             public void onCarClick(Car car, int position) {
-
+                Intent intent = new Intent(ShowCarActivity.this, CarActivity.class);
+                intent.putExtra(Car.class.getSimpleName(), car);
+                intent.putExtra("CARSHOW","101");
+                startActivityForResult(intent, 101);
             }
         };
+
         adapter = new CarAdapter(this, cars, carClickListener);
         listShowCar.setAdapter(adapter);
         mDataBase = FirebaseDatabase.getInstance().getReference("CAR");
@@ -80,6 +108,19 @@ public class ShowCarActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            Bundle arguments = data.getExtras();
+            if(arguments !=null) {
+                Car car = (Car) arguments.getSerializable(Car.class.getSimpleName());
+//                adapter.add(car.getName());
+            }
+//            adapter.notifyDataSetChanged();
+        }
     }
 
     private void getDataFromDB() {

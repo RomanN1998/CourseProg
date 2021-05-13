@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Car implements Serializable {
     private String id, name, price, specification;
     private String urlImage = "";
+    private boolean status;
+    private String idPeople;
 
     Car() {}
 
@@ -14,6 +16,8 @@ public class Car implements Serializable {
         this.price = price;
         this.specification = specification;
         this.urlImage = urlImage;
+        this.status = false;
+        this.idPeople = "";
     }
 
     public String getId() {
@@ -40,13 +44,6 @@ public class Car implements Serializable {
         this.price = price;
     }
 
-    public String getSpecification() {
-        return specification;
-    }
-
-    public void setSpecification(String specification) {
-        this.specification = specification;
-    }
 
     public String getUrlImage() {
         return urlImage;
@@ -54,5 +51,29 @@ public class Car implements Serializable {
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getIdPeople() {
+        return idPeople;
+    }
+
+    public void setIdPeople(String idPeople) {
+        this.idPeople = idPeople;
+    }
+
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
     }
 }

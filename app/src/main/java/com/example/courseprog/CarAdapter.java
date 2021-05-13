@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -39,9 +38,14 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(CarAdapter.ViewHolder holder, int position) {
         Car car = this.car.get(position);
-        holder.inent.setText(car.getName());
-        holder.name.setText(car.getPrice());
-        holder.name.setText(car.getSpecification());
+        holder.name.setText(car.getName());
+        holder.price.setText(car.getPrice());
+        holder.spec.setText(car.getSpecification());
+        if (car.isStatus())
+            holder.status.setText("Забранировано");
+        else
+            holder.status.setText("Свободно");
+
         if (!car.getUrlImage().isEmpty())
             Picasso.get().load(car.getUrlImage()).into(holder.imgView);
 
@@ -59,14 +63,16 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder>  {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView inent, name, spec;
+        final TextView price, name, spec, status;
         final ImageView imgView;
         ViewHolder(View view){
             super(view);
-            inent = view.findViewById(R.id.text_car_show_car);
-            name = view.findViewById(R.id.text_car_show_price);
-            imgView = view.findViewById(R.id.image_view_car_show);
+            name = view.findViewById(R.id.text_car_show_car);
+            price = view.findViewById(R.id.text_car_show_price);
             spec = view.findViewById(R.id.text_car_show_specification);
+            status = view.findViewById(R.id.text_car_show_status);
+            imgView = view.findViewById(R.id.image_view_car_show);
+
         }
 
     }
