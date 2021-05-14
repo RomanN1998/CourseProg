@@ -56,13 +56,15 @@
                 <TextView
                     android:id="@+id/text_car_status"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"/>
 
                 <TextView
                     android:id="@+id/text_car_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="15dp"/>
 
                 <EditText
                     android:id="@+id/edit_car_name"
@@ -73,7 +75,6 @@
                     android:hint="CAR"
                     android:textColorHint="@color/black"
                     android:textColor="@color/a"
-                    android:background="@color/white"
                     android:textSize="25dp" />
 
 
@@ -86,7 +87,6 @@
                     android:hint="PRICE"
                     android:textColorHint="@color/black"
                     android:textColor="@color/red"
-                    android:background="@color/white"
                     android:textSize="30dp" />
 
                 <EditText
@@ -96,7 +96,6 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:hint="Specification"
-                    android:background="@color/white"
                     android:textColor="@color/spec"
                     android:textColorHint="@color/black"
                     android:textSize="20dp" />
