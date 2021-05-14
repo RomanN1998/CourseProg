@@ -66,11 +66,13 @@ public class ShowCarActivity extends AppCompatActivity {
                             People seUs = task.getResult().getValue(People.class);
                             securiy = seUs.getSheld();
                             if (securiy.equals("user")) {
-                                btnSort.setVisibility(View.GONE);
+                                btnSort.setText("Моя бронь");
+                                btnSort.setVisibility(View.VISIBLE);
                                 btnCreate.setVisibility(View.GONE);
                             } else if (securiy.equals("admin")) {
                                 btnSort.setVisibility(View.VISIBLE);
                                 btnCreate.setVisibility(View.VISIBLE);
+                                btnSort.setText("Сортировка");
                             }
                         }
                     }
@@ -118,15 +120,34 @@ public class ShowCarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                carList.clear();
+                if (securiy.equals("user")) {
+                    btnSort.setText("Моя бронь");
+                    btnSort.setVisibility(View.VISIBLE);
+                    btnCreate.setVisibility(View.GONE);
+                } else if (securiy.equals("admin")) {
+                    btnSort.setVisibility(View.VISIBLE);
+                    btnCreate.setVisibility(View.VISIBLE);
+                    btnSort.setText("Сортировка");
+                }
 
+                carList.clear();
                 if(boolBtn) {
-                    for(Car i : cars) {
-                        if (i.isStatus() == true) {
-                            carList.add(i);
+
+                    if (securiy.equals("user")) {
+                        for(Car i : cars) {
+                            if (i.getIdPeople().equals(cUser.getUid())) {
+                                carList.add(i);
+                            }
+                        }
+                    } else if (securiy.equals("admin")) {
+                        for(Car i : cars) {
+                            if (i.isStatus() == true) {
+                                carList.add(i);
+                            }
                         }
                     }
                     boolBtn = false;
+
                 } else {
                     for(Car i : cars) {
                         if (i.isStatus() == false) {
