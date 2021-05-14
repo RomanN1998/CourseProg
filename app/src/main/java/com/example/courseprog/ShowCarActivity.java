@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class ShowCarActivity extends AppCompatActivity {
 
-    private Button btnsignout, btnCreate;
+    private Button btnsignout, btnCreate, btnSort;
     private RecyclerView listShowCar;
     private ImageView imads;
     private FirebaseAuth mAuth;
@@ -35,9 +35,11 @@ public class ShowCarActivity extends AppCompatActivity {
     private DatabaseReference mDataBase;
     private DatabaseReference mDataBaseSheld;
     private String securiy;
+    private boolean boolBtn = true;
 
     private ArrayList<Car> cars = new ArrayList<Car>();
     private ArrayList<Car> carsArray = new ArrayList<Car>();
+    private ArrayList<Car> carList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class ShowCarActivity extends AppCompatActivity {
 
         btnsignout = findViewById(R.id.btn_showcar_signout);
         btnCreate = findViewById(R.id.btn_showcar_create);
+        btnSort = findViewById(R.id.btn_showcar_sort);
         imads = findViewById(R.id.imageView3);
         listShowCar = findViewById(R.id.listShowCar);
         mDataBaseSheld = FirebaseDatabase.getInstance().getReference("USERS");
@@ -83,7 +86,7 @@ public class ShowCarActivity extends AppCompatActivity {
             }
         };
 
-        adapter = new CarAdapter(this, cars, carClickListener);
+        adapter = new CarAdapter(this, carsArray, carClickListener);
         listShowCar.setAdapter(adapter);
         mDataBase = FirebaseDatabase.getInstance().getReference("CAR");
         getDataFromDB();
@@ -106,6 +109,34 @@ public class ShowCarActivity extends AppCompatActivity {
                 Intent intent = new Intent(ShowCarActivity.this, CarActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        btnSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                carList.clear();
+
+                if(boolBtn) {
+                    for(Car i : cars) {
+                        if (i.isStatus() == true) {
+                            carList.add(i);
+                        }
+                    }
+                    boolBtn = false;
+                } else {
+                    for(Car i : cars) {
+                        if (i.isStatus() == false) {
+                            carList.add(i);
+                        }
+                    }
+                    boolBtn = true;
+                }
+                carsArray.clear();
+                carsArray.addAll(carList);
+                adapter.notifyDataSetChanged();
+
             }
         });
     }
@@ -136,9 +167,14 @@ public class ShowCarActivity extends AppCompatActivity {
                     assert  car != null;
                     cars.add(car);
                 }
-                carsArray.addAll(cars);
+
+                for(Car i : cars) {
+                    if (i.isStatus() == true) {
+                        carList.add(i);
+                    }
+                }
+                carsArray.addAll(carList);
                 adapter.notifyDataSetChanged();
-                System.out.println(cars.size());
             }
 
             @Override
@@ -147,6 +183,18 @@ public class ShowCarActivity extends AppCompatActivity {
         };
 
         mDataBase.addValueEventListener(vListener);
+    }
+
+    //Системная кнопка Назад
+    @Override
+    public void onBackPressed(){
+        try{
+            Intent intent = new Intent(ShowCarActivity.this, RegActivity.class);
+            startActivity(intent);
+            finish();
+
+        }catch (Exception e) {
+        }
     }
 
 }

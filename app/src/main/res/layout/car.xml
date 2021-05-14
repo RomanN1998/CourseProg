@@ -76,6 +76,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <TextView
+                    android:id="@+id/text_car_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
                 <EditText
                     android:id="@+id/edit_car_name"
                     android:layout_width="match_parent"

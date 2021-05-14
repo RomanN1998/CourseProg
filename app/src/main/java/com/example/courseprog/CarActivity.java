@@ -35,7 +35,7 @@ import java.io.ByteArrayOutputStream;
 
 public class CarActivity extends AppCompatActivity {
     private EditText editName, edirPric, edirSpe;
-    private TextView textStatus;
+    private TextView textStatus, textUser;
     private ImageView imageView;
     private Button btnCreate, btnChoose, btnBack;
     private Button btnReserve, btnCange, btnDelete;
@@ -63,6 +63,7 @@ public class CarActivity extends AppCompatActivity {
         edirSpe = findViewById(R.id.edit_car_specification);
         textStatus = findViewById(R.id.text_car_status);
         imageView = findViewById(R.id.img_car_view);
+        textUser = findViewById(R.id.text_car_user);
 
         btnChoose = findViewById(R.id.btn_car_choose);
         btnBack = findViewById(R.id.btn_car_back);
@@ -130,8 +131,31 @@ public class CarActivity extends AppCompatActivity {
                                 btnCange.setVisibility(View.GONE);
                                 btnDelete.setVisibility(View.GONE);
                                 btnChoose.setVisibility(View.GONE);
+                                textUser.setVisibility(View.GONE);
                             } else if (securiy.equals("admin")) {
                                 btnReserve.setEnabled(true);
+                                textUser.setVisibility(View.VISIBLE);
+
+                                mDataBaseSheld.child(car.getIdPeople()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        if (!task.isSuccessful()) {
+                                            Log.e("firebase", "Error getting data", task.getException());
+                                        }
+                                        else {
+                                            if(!car.getIdPeople().isEmpty()) {
+                                                People pe;
+                                                pe = task.getResult().getValue(People.class);
+                                                String str = pe.getFullName() + " " + pe.getEmail() + " " + pe.getTelepone();
+                                                textUser.setText(str);
+                                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                                            }else {
+                                                textUser.setText("НЕТ");
+                                            }
+
+                                        }
+                                    }
+                                });
                             }
                         }
                     }
@@ -168,6 +192,7 @@ public class CarActivity extends AppCompatActivity {
                     car.setStatus(false);
                     btnReserve.setText("Забронировать");
                     textStatus.setText("Свободно");
+                    textUser.setText("НЕТ");
                     mDataBase.child(car.getId()).child("status").setValue(false);
                     mDataBase.child(car.getId()).child("idPeople").setValue("");
                 }
