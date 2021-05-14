@@ -164,18 +164,18 @@ public class ShowCarActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
-            Bundle arguments = data.getExtras();
-            if(arguments !=null) {
-                Car car = (Car) arguments.getSerializable(Car.class.getSimpleName());
-//                adapter.add(car.getName());
-            }
-//            adapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 101) {
+//            Bundle arguments = data.getExtras();
+//            if(arguments !=null) {
+//                Car car = (Car) arguments.getSerializable(Car.class.getSimpleName());
+////                adapter.add(car.getName());
+//            }
+////            adapter.notifyDataSetChanged();
+//        }
+//    }
 
     private void getDataFromDB() {
         ValueEventListener vListener = new ValueEventListener() {
