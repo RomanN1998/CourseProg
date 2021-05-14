@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ShowCarActivity extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public class ShowCarActivity extends AppCompatActivity {
     private DatabaseReference mDataBase;
     private DatabaseReference mDataBaseSheld;
     private String securiy;
+    private People seUs;
     private boolean boolBtn = true;
 
     private ArrayList<Car> cars = new ArrayList<Car>();
@@ -69,9 +71,12 @@ public class ShowCarActivity extends AppCompatActivity {
         imads = findViewById(R.id.imageView3);
         listShowCar = findViewById(R.id.listShowCar);
         mDataBaseSheld = FirebaseDatabase.getInstance().getReference("USERS");
+        mDataBase = FirebaseDatabase.getInstance().getReference("CAR");
+        getDataFromDB();
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser cUser = mAuth.getCurrentUser();
+
         if (cUser != null) {
             Log.d("MyLog", "UID : " + cUser.getUid());
             mDataBaseSheld.child(mAuth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -80,7 +85,7 @@ public class ShowCarActivity extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                     } else {
                         if (!(null == task.getResult().getValue(People.class))) {
-                            People seUs = task.getResult().getValue(People.class);
+                            seUs = task.getResult().getValue(People.class);
                             securiy = seUs.getSheld();
                             if (securiy.equals("user")) {
                                 btnSort.setText("Моя бронь");
@@ -90,6 +95,7 @@ public class ShowCarActivity extends AppCompatActivity {
                                 btnSort.setVisibility(View.VISIBLE);
                                 btnCreate.setVisibility(View.VISIBLE);
                                 btnSort.setText("Сортировка");
+                                getPush();
                             }
                         }
                     }
@@ -109,9 +115,8 @@ public class ShowCarActivity extends AppCompatActivity {
 
         adapter = new CarAdapter(this, carsArray, carClickListener);
         listShowCar.setAdapter(adapter);
-        mDataBase = FirebaseDatabase.getInstance().getReference("CAR");
-        getDataFromDB();
-//        getPush();
+
+
 
 //        Picasso.get().load("https://dh.img.tyt.by/720x720s/n/obshchestvo/05/f/charnobylski-shlikh-07.jpg").into(imads);
 
@@ -217,6 +222,7 @@ public class ShowCarActivity extends AppCompatActivity {
                         carList.add(i);
                     }
                 }
+                carsArray.clear();
                 carsArray.addAll(carList);
                 adapter.notifyDataSetChanged();
             }
@@ -233,22 +239,39 @@ public class ShowCarActivity extends AppCompatActivity {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
-                System.out.println("Addd");
-                NotificationCompat.Builder builder =
-                        new NotificationCompat.Builder(ShowCarActivity.this)
-                                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                                .setContentTitle("Title")
-                                .setChannelId(id)
-                                .setContentText("Main add");
 
-                Notification notification = builder.build();
-
-                notificationManager.notify(1, notification);
             }
 
             @Override
             public void onChildChanged(DataSnapshot snapshot,  String previousChildName) {
-                System.out.println("change");
+                Map<String,?> map =(Map) snapshot.getValue();
+                Boolean boolStatus = (Boolean) map.get("status");
+                if(boolStatus) {
+//                    final People[] oldUser = new People[1];
+//                    mDataBaseSheld.child(String.valueOf(map.get("idPeople"))).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                            if (!task.isSuccessful()) {
+//                            } else {
+//                                if (!(null == task.getResult().getValue(People.class))) {
+//                                    oldUser[0] = task.getResult().getValue(People.class);
+//                                }
+//                            }
+//                        }
+//                    });
+//                    String message = map.get("name").toString() + " " + oldUser[0].getFullName() + " " + oldUser[0].getTelepone();
+                    String message = map.get("name").toString();
+                    NotificationCompat.Builder builder =
+                            new NotificationCompat.Builder(ShowCarActivity.this)
+                                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                                    .setContentTitle("Новый заказ")
+                                    .setChannelId(id)
+                                    .setContentText(message);
+
+                    Notification notification = builder.build();
+                    notificationManager.notify(1, notification);
+                    System.out.println("change");
+                }
             }
 
             @Override
