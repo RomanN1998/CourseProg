@@ -62,6 +62,7 @@ public class ShowCarActivity extends AppCompatActivity {
 
         createNotificationChannel();
 
+
         btnsignout = findViewById(R.id.btn_showcar_signout);
         btnCreate = findViewById(R.id.btn_showcar_create);
         btnSort = findViewById(R.id.btn_showcar_sort);
@@ -110,6 +111,7 @@ public class ShowCarActivity extends AppCompatActivity {
         listShowCar.setAdapter(adapter);
         mDataBase = FirebaseDatabase.getInstance().getReference("CAR");
         getDataFromDB();
+//        getPush();
 
 //        Picasso.get().load("https://dh.img.tyt.by/720x720s/n/obshchestvo/05/f/charnobylski-shlikh-07.jpg").into(imads);
 
@@ -201,6 +203,9 @@ public class ShowCarActivity extends AppCompatActivity {
                 if (cars.size() > 0)
                     cars.clear();
 
+                if (carList.size() > 0)
+                    carList.clear();
+
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Car car = ds.getValue(Car.class);
                     assert  car != null;
@@ -228,6 +233,7 @@ public class ShowCarActivity extends AppCompatActivity {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                System.out.println("Addd");
                 NotificationCompat.Builder builder =
                         new NotificationCompat.Builder(ShowCarActivity.this)
                                 .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -242,7 +248,7 @@ public class ShowCarActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot snapshot,  String previousChildName) {
-
+                System.out.println("change");
             }
 
             @Override
