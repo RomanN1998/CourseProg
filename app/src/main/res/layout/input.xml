@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:backgroundTintMode="add"
             android:scaleType="fitXY"
-            android:flow_verticalAlign="baseline"
             app:srcCompat="@drawable/flag_fon"
             android:contentDescription="TODO"/>
     </LinearLayout>
