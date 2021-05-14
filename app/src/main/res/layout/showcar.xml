@@ -48,9 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:backgroundTint="@color/but"
+            android:backgroundTint="@color/black"
             android:text="Добавить"
-            android:textColor="@color/cnsh"
+            android:textColor="@color/a"
             android:textSize="20dp" />
 
         <Button
@@ -60,9 +60,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="5dp"
-            android:backgroundTint="@color/but"
+            android:backgroundTint="@color/black"
             android:text="Выход"
-            android:textColor="@color/cnsh"
+            android:textColor="@color/a"
             android:textSize="20dp" />
     </LinearLayout>
 
