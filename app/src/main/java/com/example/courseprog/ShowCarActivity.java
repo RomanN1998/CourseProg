@@ -1,6 +1,11 @@
 package com.example.courseprog;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,12 +15,14 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,10 +48,19 @@ public class ShowCarActivity extends AppCompatActivity {
     private ArrayList<Car> carsArray = new ArrayList<Car>();
     private ArrayList<Car> carList = new ArrayList<>();
 
+    // Идентификатор уведомления
+    private static final int NOTIFY_ID = 101;
+
+    // Идентификатор канала
+    String id = "id_product";
+    NotificationManager notificationManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.showcar);
+
+        createNotificationChannel();
 
         btnsignout = findViewById(R.id.btn_showcar_signout);
         btnCreate = findViewById(R.id.btn_showcar_create);
@@ -164,18 +180,18 @@ public class ShowCarActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
-            Bundle arguments = data.getExtras();
-            if(arguments !=null) {
-                Car car = (Car) arguments.getSerializable(Car.class.getSimpleName());
-//                adapter.add(car.getName());
-            }
-//            adapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 101) {
+//            Bundle arguments = data.getExtras();
+//            if(arguments !=null) {
+//                Car car = (Car) arguments.getSerializable(Car.class.getSimpleName());
+////                adapter.add(car.getName());
+//            }
+////            adapter.notifyDataSetChanged();
+//        }
+//    }
 
     private void getDataFromDB() {
         ValueEventListener vListener = new ValueEventListener() {
@@ -206,6 +222,65 @@ public class ShowCarActivity extends AppCompatActivity {
         };
 
         mDataBase.addValueEventListener(vListener);
+    }
+
+    private void getPush() {
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                NotificationCompat.Builder builder =
+                        new NotificationCompat.Builder(ShowCarActivity.this)
+                                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                                .setContentTitle("Title")
+                                .setChannelId(id)
+                                .setContentText("Main add");
+
+                Notification notification = builder.build();
+
+                notificationManager.notify(1, notification);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot snapshot,  String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved( DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        };
+        mDataBase.addChildEventListener(childEventListener);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+            // The user-visible name of the channel.
+            CharSequence name = "Product";
+            // The user-visible description of the channel.
+            String description = "Notifications regarding our products";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+            // Configure the notification channel.
+            mChannel.setDescription(description);
+            mChannel.enableLights(true);
+            // Sets the notification light color for notifications posted to this
+            // channel, if the device supports this feature.
+            mChannel.setLightColor(Color.RED);
+            notificationManager.createNotificationChannel(mChannel);
+        }
     }
 
     //Системная кнопка Назад
