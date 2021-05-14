@@ -63,6 +63,11 @@
                 android:id="@+id/btn_showcar_sort"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/black"
+                android:textColor="@color/a"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="20dp"
                 android:layout_weight="1"
                 android:text="Сортировка" />
         </LinearLayout>
