@@ -66,9 +66,11 @@ public class ShowCarActivity extends AppCompatActivity {
                             People seUs = task.getResult().getValue(People.class);
                             securiy = seUs.getSheld();
                             if (securiy.equals("user")) {
+                                btnSort.setVisibility(View.GONE);
                                 btnCreate.setVisibility(View.GONE);
                             } else if (securiy.equals("admin")) {
-
+                                btnSort.setVisibility(View.VISIBLE);
+                                btnCreate.setVisibility(View.VISIBLE);
                             }
                         }
                     }
@@ -169,7 +171,7 @@ public class ShowCarActivity extends AppCompatActivity {
                 }
 
                 for(Car i : cars) {
-                    if (i.isStatus() == true) {
+                    if (i.isStatus() == false) {
                         carList.add(i);
                     }
                 }
