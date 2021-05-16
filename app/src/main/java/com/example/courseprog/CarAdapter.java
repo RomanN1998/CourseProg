@@ -42,7 +42,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.ViewHolder>  {
         holder.price.setText(car.getPrice());
         holder.spec.setText(car.getSpecification());
         if (car.isStatus())
-            holder.status.setText("Забранировано");
+            holder.status.setText("Забронировано");
         else
             holder.status.setText("Свободно");
 

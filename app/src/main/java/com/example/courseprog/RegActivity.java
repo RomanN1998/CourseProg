@@ -82,7 +82,7 @@ public class RegActivity extends AppCompatActivity {
                             });
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Введите логин пароль", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Введите логин и пароль", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -137,13 +137,13 @@ public class RegActivity extends AppCompatActivity {
                                                     editTel.getText().toString());
 
                                             mDataBase.child(mAuth.getUid()).setValue(people);
-                                            Toast.makeText(getApplicationContext(), "Создан аккаунт удачно", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "Аккаунт создан удачно", Toast.LENGTH_SHORT).show();
 
                                             Intent intent = new Intent(RegActivity.this, ShowCarActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "Создан аккаунт неудачно", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "Аккаунт создан неудачно", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });

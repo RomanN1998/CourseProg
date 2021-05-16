@@ -209,7 +209,7 @@ public class CarActivity extends AppCompatActivity {
                 else {
                     car.setStatus(true);
                     btnReserve.setText("Отменить бронирование");
-                    textStatus.setText("Забранировано");
+                    textStatus.setText("Забронировано");
                     mDataBase.child(car.getId()).child("status").setValue(true);
                     mDataBase.child(car.getId()).child("idPeople").setValue(cUser.getUid());
                 }
@@ -229,13 +229,13 @@ public class CarActivity extends AppCompatActivity {
                             && !TextUtils.isEmpty(edirSpe.getText().toString())) {
                         mDataBase.child(idkey).setValue(car);
 
-                        Toast.makeText(getApplicationContext(), "Машина добавлена в каталог", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Авто добавлен в каталог", Toast.LENGTH_SHORT).show();
                         edirPric.setText("");
                         edirSpe.setText("");
                         editName.setText("");
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Зполниет все поля", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Заполните все поля данных", Toast.LENGTH_LONG).show();
                     }
                 }
 
