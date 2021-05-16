@@ -104,7 +104,7 @@ public class CarActivity extends AppCompatActivity {
             } else if(cUser.getUid().equals(car.getIdPeople())) {
                 btnReserve.setEnabled(true);
                 if (car.isStatus()) {
-                    textStatus.setText("Забранировано");
+                    textStatus.setText("Забронировано");
                     btnReserve.setText("Отменить бронирование");
                 } else {
                     textStatus.setText("Свободно");
@@ -113,7 +113,7 @@ public class CarActivity extends AppCompatActivity {
             } else {
                 btnReserve.setEnabled(false);
                 textStatus.setText("Забранировано");
-                btnReserve.setText("Забранированый");
+                btnReserve.setText("Забронированый");
             }
 
         }
